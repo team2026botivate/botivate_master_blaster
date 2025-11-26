@@ -1,5 +1,6 @@
+import { SignupFactoryMultistep } from "@/features/signup";
 const Signup = () => {
-  return <div className="h-screen bg-red-400 text-white">Signup</div>;
+  return <SignupFactoryMultistep/>
 };
 
 export default Signup;

@@ -1,9 +1,7 @@
-import React from 'react'
+import { Login_main_component } from "@/features/login";
 
-const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+const Login = () => {
+  return <Login_main_component />;
+};
 
-export default Home
+export default Login;
