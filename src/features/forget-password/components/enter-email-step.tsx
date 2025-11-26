@@ -63,7 +63,7 @@ export const EnterEmailStep = ({ form, onSubmit }: EnterEmailStepProps) => {
 
         <div className="text-center">
           <Link
-            href="/"
+            href="/login"
             className="text-primary text-sm transition-colors hover:underline"
           >
             ← Back to Login

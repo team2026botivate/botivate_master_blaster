@@ -1,12 +1,11 @@
-"use client";
+
+"use client"
 import { useForgotPasswordForm } from "../hooks/use-forgot-password-form";
 import { EnterEmailStep } from "./enter-email-step";
 import { ConfirmOtpStep } from "./confirm-otp-step";
+import { ResetPasswordStep } from "./reset-password-step";
 import { SuccessStep } from "./success-step";
-import { useRouter } from "next/navigation";
-
 const ForgotPassword = () => {
-  const router = useRouter();
   const {
     currentStep,
     userEmail,
@@ -14,20 +13,32 @@ const ForgotPassword = () => {
     isResendDisabled,
     emailForm,
     otpForm,
+    passwordForm,
     handleEmailSubmit,
     handleOtpSubmit,
+    handlePasswordSubmit,
     handleResendOtp,
     resetFlow,
   } = useForgotPasswordForm();
 
   const handleBackToLogin = () => {
-    router.push("/login");
     resetFlow();
+    window.location.href = "/";
   };
 
   return (
-    <div className="bg-background flex min-h-screen items-center justify-center p-4">
-      <div className="border-border/50 bg-card w-full max-w-md rounded-2xl border p-8 shadow-2xl">
+    <div
+      className="min-h-screen flex items-center justify-center p-4"
+      style={{
+        background: "hsl(var(--background))",
+      }}
+    >
+      <div
+        className="w-full max-w-md rounded-2xl p-8 shadow-2xl border border-border/50"
+        style={{
+          background: "hsl(var(--card))",
+        }}
+      >
         {currentStep === "email" && (
           <EnterEmailStep form={emailForm} onSubmit={handleEmailSubmit} />
         )}
@@ -40,6 +51,13 @@ const ForgotPassword = () => {
             otpError={otpError}
             isResendDisabled={isResendDisabled}
             onResend={handleResendOtp}
+          />
+        )}
+
+        {currentStep === "password" && (
+          <ResetPasswordStep
+            form={passwordForm}
+            onSubmit={handlePasswordSubmit}
           />
         )}
 

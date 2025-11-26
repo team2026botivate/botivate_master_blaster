@@ -1,14 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  emailSchema,
-  otpSchema,
-  EmailFormData,
-  OtpFormData,
-} from "../schemas/forgot-password-schemas";
+import { emailSchema, otpSchema, passwordSchema, EmailFormData, OtpFormData, PasswordFormData } from "../schemas/forgot-password-schemas";
 
-type ForgotPasswordStep = "email" | "otp" | "success";
+type ForgotPasswordStep = "email" | "otp" | "password" | "success";
 
 // Mock OTP for demo: "123456"
 const MOCK_VALID_OTP = "123456";
@@ -29,25 +24,34 @@ export const useForgotPasswordForm = () => {
     defaultValues: { otp: "" },
   });
 
-  const handleEmailSubmit = async (data: EmailFormData) => {
-    await new Promise((resolve) => setTimeout(resolve, 4000));
+  const passwordForm = useForm<PasswordFormData>({
+    resolver: zodResolver(passwordSchema),
+    defaultValues: { password: "", confirmPassword: "" },
+  });
+
+  const handleEmailSubmit = (data: EmailFormData) => {
     console.log("Sending OTP to:", data.email);
     setUserEmail(data.email);
     setCurrentStep("otp");
     // Mock: OTP sent successfully
   };
 
-  const handleOtpSubmit = async (data: OtpFormData) => {
-    await new Promise((resolve) => setTimeout(resolve, 4000));
+  const handleOtpSubmit = (data: OtpFormData) => {
     console.log("Verifying OTP:", data.otp);
     // Mock verification: accept "123456" as valid OTP
     if (data.otp === MOCK_VALID_OTP) {
       console.log("OTP verified successfully");
       setOtpError("");
-      setCurrentStep("success");
+      setCurrentStep("password");
     } else {
       setOtpError("Invalid OTP. Please try again or use test OTP: 123456");
     }
+  };
+
+  const handlePasswordSubmit = (data: PasswordFormData) => {
+    console.log("Resetting password for:", userEmail);
+    console.log("New password set successfully");
+    setCurrentStep("success");
   };
 
   const handleResendOtp = () => {
@@ -64,6 +68,7 @@ export const useForgotPasswordForm = () => {
     setOtpError("");
     emailForm.reset();
     otpForm.reset();
+    passwordForm.reset();
   };
 
   return {
@@ -73,8 +78,10 @@ export const useForgotPasswordForm = () => {
     isResendDisabled,
     emailForm,
     otpForm,
+    passwordForm,
     handleEmailSubmit,
     handleOtpSubmit,
+    handlePasswordSubmit,
     handleResendOtp,
     resetFlow,
   };
