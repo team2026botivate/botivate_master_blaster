@@ -7,12 +7,13 @@
 /* ---------------------------
    TAILWIND V4 – THEME COLORS (INLINE TOKENS)
 ---------------------------- */
+
 @theme inline {
   /* Core UI Colors */
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
   --color-pendingStatus: hsl(var(--pending));
-   --color-card: hsl(var(--card));
+  --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
 
   --color-popover: hsl(var(--popover));
@@ -62,6 +63,8 @@
   /* Animations */
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  --shadow-card-shadow: 0 8px 30px rgb(0 0 0 / 0.12);
 }
 
 /* ---------------------------
